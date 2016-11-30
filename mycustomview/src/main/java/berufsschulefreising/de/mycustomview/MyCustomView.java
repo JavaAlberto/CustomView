@@ -17,6 +17,8 @@ public class MyCustomView extends RelativeLayout {
     TextView valueTextView;
     View minusButton;
     View plusButton;
+    private int minValue = Integer.MIN_VALUE;
+    private int maxValue = Integer.MAX_VALUE;
 
     public MyCustomView(Context context) {
         super(context);
@@ -29,8 +31,6 @@ public class MyCustomView extends RelativeLayout {
         Log.e("init","inityy");
         init(context);
     }
-
-
     private void init(Context context)
     {
         Log.e("init","init00");
@@ -44,16 +44,60 @@ public class MyCustomView extends RelativeLayout {
         minusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             //   decrementValue(); //we'll define this method later
+               decrementValue();
             }
         });
 
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //    incrementValue(); //we'll define this method later        }
-            }
+              incrementValue();        }
+            
         });
+    }
+    private void incrementValue() {
+        int currentVal = Integer.valueOf(valueTextView.getText().toString());
+        if(currentVal < maxValue) {
+            valueTextView.setText(String.valueOf(currentVal + 1));
+        }
+    }
+    private void decrementValue() {
+        int currentVal = Integer.valueOf(valueTextView.getText().toString());
+        if(currentVal < maxValue) {
+            valueTextView.setText(String.valueOf(currentVal - 1));
+        }
+    }
+
+
+    public int getMinValue() {
+        return minValue;
+    }
+
+    public void setMinValue(int minValue) {
+        this.minValue = minValue;
+    }
+
+    public int getMaxValue() {
+        return maxValue;
+    }
+
+    public void setMaxValue(int maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public int getValue() {
+        return Integer.valueOf(valueTextView.getText().toString());
+    }
+
+    public void setValue(int newValue) {
+        int value = newValue;
+        if(newValue < minValue) {
+            value = minValue;
+        } else if (newValue > maxValue) {
+            value = maxValue;
+        }
+
+        valueTextView.setText(String.valueOf(value));
     }
 
 }
